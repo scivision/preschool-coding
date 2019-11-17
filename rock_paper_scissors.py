@@ -1,14 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import numpy as np
 import random
-import sounddevice as sd
-from matplotlib.pyplot import figure, show
 from time import sleep
-
+try:
+    import sounddevice as sd
+except ImportError:
+    sd = None
 
 P = {'r': 'rock', 'p': 'paper', 's': 'scissors'}
-
-FS = 8000.
+FS = 44100  # needs to be int, non-44100 may not work on HDMI
 
 
 def main():
@@ -60,6 +60,10 @@ def print_choices():
 
 
 def feedback(stat: int):
+    global sd
+
+    if sd is None:
+        return
 
     if stat == -1:
         f1 = 700.
@@ -82,11 +86,16 @@ def feedback(stat: int):
     sound[Np:ih] = np.sin(2*np.pi*f1*t[Np:ih])
     sound[ih:] = np.sin(2*np.pi*f2*t[ih:])
 
-    sd.play(sound, FS)
+    try:
+        sd.play(sound, FS)
+    except Exception as err:
+        sd = None
+        print(f"Error with sound playback, disabling.  Error: {err}")
 
     sleep(T)
 
     if False:
+        from matplotlib.pyplot import figure, show
         ax = figure().gca()
         ax.plot(t, sound)
         ax.set_xlabel('time [sec]')

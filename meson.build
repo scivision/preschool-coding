@@ -1,4 +1,5 @@
-project('preschool coding', 'fortran', default_options : ['default_library=static'])
+project('preschool coding', 'fortran',
+  default_options : ['default_library=static', 'buildtype=release'])
 
 fc = meson.get_compiler('fortran')
 if fc.get_id() == 'gcc'
@@ -9,7 +10,7 @@ num = library('numerical', 'numerical.f90')
 
 executable('number_guess', 'number_guess.f90',
   link_with: num)
-  
+
 prime = executable('prime_test', 'prime_test.f90',
   link_with: num)
 
