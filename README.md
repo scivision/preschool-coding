@@ -9,7 +9,8 @@ Focus is on intuitive, broadly applicable languages like Python and Fortran.
 
 ## Fortran
 
-Fortran examples are built by
+Fortran examples are built by:
+
 ```sh
 meson build
 
