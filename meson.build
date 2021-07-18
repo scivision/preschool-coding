@@ -1,10 +1,5 @@
 project('preschool coding', 'fortran',
-  default_options : ['default_library=static', 'buildtype=release'])
-
-fc = meson.get_compiler('fortran')
-if fc.get_id() == 'gcc'
-  add_global_arguments('-fimplicit-none', '-Wall', '-Wextra', '-Wpedantic', language : 'fortran')
-endif
+  default_options : ['default_library=static', 'buildtype=release', 'warning_level=3'])
 
 num = library('numerical', 'numerical.f90')
 

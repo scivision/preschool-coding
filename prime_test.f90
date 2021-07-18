@@ -1,3 +1,4 @@
+program test_prime
 !! test correctness of primality detection
 use, intrinsic :: iso_fortran_env, only: int64, dp=>real64
 use numerical, only: isprime

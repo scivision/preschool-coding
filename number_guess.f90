@@ -1,3 +1,4 @@
+program number_guess
 !! not every compiler inits  arandom seed (Gfortran yes, flang no)
 use, intrinsic:: iso_fortran_env, only: stdin=>input_unit, stdout=>output_unit
 use numerical, only: isprime
@@ -8,6 +9,8 @@ integer :: secret, guess, i
 real :: r
 character(20) :: msg, buf
 
+call random_init(.false., .false.)
+
 call random_number(r)
 secret = int((r*99+1))
 
@@ -17,7 +20,7 @@ main: do
   write(stdout,'(A)', advance='no') msg
   read(stdin,*, iostat=i) buf
   if (i/=0) stop 'goodbye'
-  
+
   if (buf == 'h' .or. buf == 'hint' .or. buf == 'help') then
     if (isprime(secret)) then
       print *,'my secret number is prime'
